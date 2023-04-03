@@ -6,7 +6,8 @@ public class TestCompteBancaire {
         compte1.deposer(600.0); // dépose 500 euros sur le compte 1
         compte1.retirer(200.0); // retire 200 euros du compte 1
         compte1.transferer(compte2, 300.0); // transfère 300 euros du compte 1 vers le compte 2
-
+        System.out.println(compte2);
+        System.out.println(compte2  o());
 
         Banque banque = new Banque("N26");
 

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class CompteBancaire {
     private int numero;
     private String titulaire;
@@ -5,14 +6,16 @@ public class CompteBancaire {
     private double fraisGestion;
     private double tauxInteret;
     private double limiteDecouvert;
+    private ArrayList<String> transactions;
     
         public CompteBancaire(int numero, String titulaire, double solde) {
             this.numero = numero;
             this.titulaire = titulaire;
             this.solde = solde;
-            this.fraisGestion = fraisGestion;
-            this.tauxInteret = tauxInteret;
-            this.limiteDecouvert = limiteDecouvert;
+            this.fraisGestion = 0.997;
+            this.tauxInteret = 0.03;
+            this.limiteDecouvert = 600;
+            this.transactions = new ArrayList<String>();
 
 
         }
@@ -42,15 +45,19 @@ public class CompteBancaire {
 
     public void setSolde(double solde) {
         this.solde = solde;
-        this.solde -= this.fraisGestion;
+        this.solde = this.solde*this.fraisGestion;
     }
     public void deposer(double montant) {
         if (montant > 0) {
             this.solde += montant;
-            this.solde -= this.fraisGestion; 
-            System.out.println("Dépôt de " + montant + " effectué avec succès.");
+            this.solde = this.solde*this.fraisGestion; 
+            String transaction= "Dépôt de " + montant + " effectué avec succès.";
+            System.out.println(transaction);
+            this.transactions.add(transaction);
         } else {
-            System.out.println("Le montant du dépôt doit être supérieur à 0.");
+            String transaction="Le montant du dépôt doit être supérieur à 0.";
+            System.out.println(transaction);
+            this.transactions.add(transaction);            
         }
     }
 
@@ -58,8 +65,10 @@ public class CompteBancaire {
         if (montant > 0) {
             if (montant <= this.solde + this.limiteDecouvert) {
                 this.solde -= montant;
-                this.solde -= this.fraisGestion;
-                System.out.println("Retrait de " + montant + " effectué avec succès.");
+                this.solde = this.solde*this.fraisGestion;
+                String transaction = "Retrait de " + montant + " effectué avec succès.";
+                System.out.println(transaction);
+                
             } else {
                 System.out.println("Solde insuffisant.");
             }
@@ -67,7 +76,6 @@ public class CompteBancaire {
             System.out.println("Le montant du retrait doit être supérieur à 0.");
         }
     }
-
     public void transferer(CompteBancaire destinataire, double montant) {
         if (montant > 0) {
             if (montant <= this.solde) {
@@ -80,7 +88,6 @@ public class CompteBancaire {
         } else {
             System.out.println("Le montant du transfert doit être supérieur à 0.");
         }
-
     }
     public void calculerInterets() {
         double interets = this.solde * this.tauxInteret;
