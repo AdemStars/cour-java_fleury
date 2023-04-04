@@ -1,3 +1,4 @@
+import java.beans.DesignMode;
 import java.util.ArrayList;
 public class CompteBancaire {
     private int numero;
@@ -68,7 +69,8 @@ public class CompteBancaire {
                 this.solde = this.solde*this.fraisGestion;
                 String transaction = "Retrait de " + montant + " effectué avec succès.";
                 System.out.println(transaction);
-                
+                this.transactions.add(transaction); 
+
             } else {
                 System.out.println("Solde insuffisant.");
             }
@@ -81,7 +83,9 @@ public class CompteBancaire {
             if (montant <= this.solde) {
                 this.solde -= montant;
                 destinataire.solde += montant;
-                System.out.println("Transfert de " + montant + " effectué avec succès.");
+                String transaction = "Transfert de " + montant + "sur le compte "+ destinataire + " effectué avec succès.";
+                System.out.println(transaction);
+                this.transactions.add(transaction); 
             } else {
                 System.out.println("Solde insuffisant.");
             }
